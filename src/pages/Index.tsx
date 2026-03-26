@@ -1,14 +1,35 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import HomePage from "@/pages/HomePage";
+import CatalogPage from "@/pages/CatalogPage";
+import AboutPage from "@/pages/AboutPage";
+import TermsPage from "@/pages/TermsPage";
+import ContactsPage from "@/pages/ContactsPage";
+import CabinetPage from "@/pages/CabinetPage";
 
-const Index = () => {
+export default function Index() {
+  const [activePage, setActivePage] = useState("home");
+
+  const handleSetPage = (page: string) => {
+    setActivePage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4 color-black text-black">Добро пожаловать!</h1>
-        <p className="text-xl text-gray-600">тут будет отображаться ваш проект</p>
-      </div>
+    <div className="min-h-screen" style={{ background: 'var(--dark-base)' }}>
+      <Navbar activePage={activePage} setActivePage={handleSetPage} />
+
+      <main>
+        {activePage === "home" && <HomePage setActivePage={handleSetPage} />}
+        {activePage === "catalog" && <CatalogPage />}
+        {activePage === "about" && <AboutPage />}
+        {activePage === "terms" && <TermsPage />}
+        {activePage === "contacts" && <ContactsPage />}
+        {activePage === "cabinet" && <CabinetPage />}
+      </main>
+
+      <Footer setActivePage={handleSetPage} />
     </div>
   );
-};
-
-export default Index;
+}
